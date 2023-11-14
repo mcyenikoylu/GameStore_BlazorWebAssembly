@@ -4,18 +4,48 @@
 
 <h1>Game Catalog</h1>
 
-Welcome to your new app.
+@if (games != null)
+{
+    <p>Welcome to your new app.</p>
 
-<table>
-    <thead>
+    <table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
         <td>Id</td>
         <td>Name</td>
         <td>Genre</td>
         <td>Price</td>
         <td>Release Date</td>
-        <td></td>
+
     </thead>
     <tbody>
+        @foreach (var item in games)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Genre</td>
+                    <td>@item.Price</td>
+                    <td>@item.ReleaseDate.ToShortDateString()</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
 
-    </tbody>
-</table>
+
+@code {
+    private Models.Game[]? games;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        games = GameClient.GetGames();
+
+    }
+}
