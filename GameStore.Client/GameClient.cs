@@ -55,4 +55,10 @@ public static class GameClient
         existingGame.Price = updateGame.Price;
         existingGame.ReleaseDate = updateGame.ReleaseDate;
     }
+
+    public static void DeleteGame(int Id)
+    {
+        Game game = GetGame(Id);
+        games.Remove(game);
+    }
 }
