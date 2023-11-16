@@ -22,7 +22,7 @@
         <td>Genre</td>
         <td>Price</td>
         <td>Release Date</td>
-
+        <td></td>
     </thead>
     <tbody>
         @foreach (var item in games)
@@ -33,7 +33,11 @@
                     <td>@item.Genre</td>
                     <td>@item.Price</td>
                     <td>@item.ReleaseDate.ToShortDateString()</td>
-                    <td></td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="(() => EditGame(item.Id))">
+                            <i class="oi oi-pencil"></i>
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -59,5 +63,10 @@ else
     private void CreateGame()
     {
         NavigationManager.NavigateTo("/game");
+    }
+
+    private void EditGame(int Id)
+    {
+        NavigationManager.NavigateTo($"/game/{Id}");
     }
 }

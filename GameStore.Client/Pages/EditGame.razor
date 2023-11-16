@@ -1,20 +1,33 @@
 ﻿@page "/game"
+@page "/game/{Id:int}"
 @inject NavigationManager NavigationManager
 
-<PageTitle>New game</PageTitle>
+<PageTitle>@title</PageTitle>
 <h1>New Catalog</h1>
-<h3>New Game</h3>
+<h3>@title</h3>
 
-<div class="row">
+@if (game != null)
+{
+    <div class="row">
     <div class="col-sm-4">
-        <EditForm Model="@game" OnSubmit="HandleSubmit">
+        <EditForm Model="@game" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
                 <InputText id="name" @bind-Value="game.Name" class="form-control"></InputText>
             </div>
             <div class="mb-3">
                 <label for="genre" class="form-label">Genre:</label>
-                <InputText id="genre" @bind-Value="game.Genre" class="form-control"></InputText>
+                @* <InputText id="genre" @bind-Value="game.Genre" class="form-control"></InputText> *@
+                <InputSelect id="genre" @bind-Value="game.Genre" class="form-select">
+                    <option value="">select genre</option>
+                    <option value="Fighting">Fighting</option>
+                    <option value="Kids and Family">Kids and Family</option>
+                    <option value="Racing">Racing</option>
+                    <option value="Roleplaying">Roleplaying</option>
+                    <option value="Sports">Sports</option>
+                </InputSelect>
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price:</label>
@@ -25,21 +38,68 @@
                 <InputDate id="releasedate" @bind-Value="game.ReleaseDate" class="form-control"></InputDate>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" @onclick="CancelNewGame">Cancel</button>
         </EditForm>
     </div>
 </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+}
+
+
 
 @code {
-    private Models.Game game = new()
+    [Parameter]
+    public int? Id { get; set; }
+    private Models.Game? game;
+    @* private Models.Game game = new()
+{
+Name = String.Empty,
+Genre = String.Empty,
+ReleaseDate = DateTime.Now
+}; *@
+    private string title = String.Empty;
+    protected override void OnParametersSet()
+    {
+        if (Id != null)
         {
-            Name = String.Empty,
-            Genre = String.Empty,
-            ReleaseDate = DateTime.Now
-        };
+            Models.Game foundGame = GameClient.GetGame(Id.Value);
+            game = new()
+                {
+                    Id = foundGame.Id,
+                    Name = foundGame.Name,
+                    Genre = foundGame.Genre,
+                    Price = foundGame.Price,
+                    ReleaseDate = foundGame.ReleaseDate
+                };
+            title = $"Game Edit: {game.Name}";
+        }
+        else
+        {
+            game = new()
+                {
+                    Name = String.Empty,
+                    Genre = String.Empty,
+                    ReleaseDate = DateTime.Now
+                };
+            title = "New Game";
+        }
+    }
 
     private void HandleSubmit()
     {
-        GameClient.AddGame(game);
+        if (game!.Id > 0)
+            GameClient.UpdateGame(game);
+        else
+            GameClient.AddGame(game);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    private void CancelNewGame()
+    {
         NavigationManager.NavigateTo("/");
     }
 }

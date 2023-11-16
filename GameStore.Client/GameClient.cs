@@ -41,4 +41,18 @@ public static class GameClient
         game.Id = games.Max(game => game.Id) + 1;
         games.Add(game);
     }
+
+    public static Game GetGame(int id)
+    {
+        return games.Find(game => game.Id == id) ?? throw new Exception("Could not find game!");
+    }
+
+    public static void UpdateGame(Game updateGame)
+    {
+        Game existingGame = GetGame(updateGame.Id);
+        existingGame.Name = updateGame.Name;
+        existingGame.Genre = updateGame.Genre;
+        existingGame.Price = updateGame.Price;
+        existingGame.ReleaseDate = updateGame.ReleaseDate;
+    }
 }
