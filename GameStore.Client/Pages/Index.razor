@@ -1,6 +1,10 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
 
+@using System.Net.Http
+@inject HttpClient Http
+@using System.Net.Http.Json
+
 <PageTitle>Game Catalog</PageTitle>
 
 <h1>Game Catalog</h1>
@@ -62,11 +66,13 @@ else
     private Models.Game? currentGame;
     protected override void OnInitialized()
     {
-        base.OnInitialized();
+        //base.OnInitialized();
 
         games = GameClient.GetGames();
 
     }
+    //protected override async Task OnInitializedAsync() =>
+    //games = await Http.GetFromJsonAsync<Models.Game[]>("/Recipes");
 
     private void CreateGame()
     {
