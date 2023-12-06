@@ -29,6 +29,15 @@ public static class GameClient
         Price = 34.69m,
         ReleaseDate = new DateTime(2009,11,21)
         }
+        ,
+        new Models.Game()
+        {
+        Id = 4,
+        Name = "Mervemin gozleri",
+        Genre = "Fighting",
+        Price = 34.69m,
+        ReleaseDate = new DateTime(2009,11,21)
+        }
     };
 
     public static Game[] GetGames()
