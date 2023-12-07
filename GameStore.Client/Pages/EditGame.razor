@@ -2,6 +2,8 @@
 @page "/game/{Id:int}"
 @inject NavigationManager NavigationManager
 
+@attribute [Authorize]
+
 <PageTitle>@title</PageTitle>
 <h1>New Catalog</h1>
 <h3>@title</h3>

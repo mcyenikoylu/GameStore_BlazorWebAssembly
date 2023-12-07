@@ -1,4 +1,6 @@
-﻿<h3>DeleteGame</h3>
+﻿@attribute [Authorize]
+
+<h3>DeleteGame</h3>
 <!-- Modal -->
 <div class="modal fade" id="daleteModal" tabindex="-1" aria-labelledby="daleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -17,6 +19,7 @@
     </div>
   </div>
 </div
+
 @code {
     [Parameter]
     public Models.Game? game {get; set;}
