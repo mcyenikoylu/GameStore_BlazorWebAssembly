@@ -6,7 +6,7 @@
     <main>
         <AuthorizeView>
             <Authorized>
-                <button style="btn btn-primary">Log out</button>
+                <button style="btn btn-primary" @onclick=LogOut>Log out</button>
                 <h3>Welcome, @context.User.Identity?.Name</h3>
             </Authorized>
         </AuthorizeView>
