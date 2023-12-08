@@ -23,3 +23,7 @@ Huho583809
 clientid d9d
 objectid ef5
 tenantid 68a
+
+-----
+
+https://login.microsoftonline.com/302cbbf0-0010-4c00-8735-fbac82bd878b/oauth2/v2.0/logout?post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fauthentication%2Flogout-callback&client-request-id=be8c76d5-07c3-4787-8a51-20fcfdc1856d&state=0a4b37c7-180a-43a5-95e5-03ca92e77942

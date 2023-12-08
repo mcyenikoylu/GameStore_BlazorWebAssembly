@@ -1,25 +1,17 @@
-﻿@*@inject NavigationManager NavigationManager*@
+﻿@inject NavigationManager NavigationManager
 
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
-                    @* @if (context.User.Identity?.IsAuthenticated != true)
+                    @if (context.User.Identity?.IsAuthenticated != true)
                     {
-                    NavigationManager.NavigateTo("authentication/login");
+                        NavigationManager.NavigateTo("authentication/login");
                     }
                     else
                     {
-                    <p>You are not allowed to access this page</p>
-                    } *@
-                    @if (!context.User.Identity.IsAuthenticated)
-                    {
-                        <RedirectToLogin />
-                    }
-                    else
-                    {
-                        <p>You are not authorized to access this resource.</p>
+                        <p>You are not allowed to access this page</p>
                     }
                 </NotAuthorized>
             </AuthorizeRouteView>
